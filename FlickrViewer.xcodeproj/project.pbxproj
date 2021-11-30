@@ -19,6 +19,9 @@
 		B839649F274AFCCB00B56431 /* FlickrData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B839649E274AFCCB00B56431 /* FlickrData.swift */; };
 		B83964A3274B38B000B56431 /* FlickrCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B83964A2274B38B000B56431 /* FlickrCell.swift */; };
 		B83964A6274B3D5C00B56431 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = B83964A5274B3D5C00B56431 /* SDWebImage */; };
+		B83964A8274FE11300B56431 /* PictureDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B83964A7274FE11300B56431 /* PictureDetailViewController.swift */; };
+		B83964AA274FE6AF00B56431 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B83964A9274FE6AF00B56431 /* Parser.swift */; };
+		B83964B0274FEEFB00B56431 /* HTMLKit in Frameworks */ = {isa = PBXBuildFile; productRef = B83964AF274FEEFB00B56431 /* HTMLKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +57,8 @@
 		B8396491274AF9DA00B56431 /* FlickrViewerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrViewerUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		B839649E274AFCCB00B56431 /* FlickrData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrData.swift; sourceTree = "<group>"; };
 		B83964A2274B38B000B56431 /* FlickrCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrCell.swift; sourceTree = "<group>"; };
+		B83964A7274FE11300B56431 /* PictureDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PictureDetailViewController.swift; sourceTree = "<group>"; };
+		B83964A9274FE6AF00B56431 /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +66,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B83964B0274FEEFB00B56431 /* HTMLKit in Frameworks */,
 				B83964A6274B3D5C00B56431 /* SDWebImage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -114,6 +120,8 @@
 				B839647C274AF9DA00B56431 /* Info.plist */,
 				B839649E274AFCCB00B56431 /* FlickrData.swift */,
 				B83964A2274B38B000B56431 /* FlickrCell.swift */,
+				B83964A7274FE11300B56431 /* PictureDetailViewController.swift */,
+				B83964A9274FE6AF00B56431 /* Parser.swift */,
 			);
 			path = FlickrViewer;
 			sourceTree = "<group>";
@@ -153,6 +161,7 @@
 			name = FlickrViewer;
 			packageProductDependencies = (
 				B83964A5274B3D5C00B56431 /* SDWebImage */,
+				B83964AF274FEEFB00B56431 /* HTMLKit */,
 			);
 			productName = FlickrViewer;
 			productReference = B839646B274AF9D600B56431 /* FlickrViewer.app */;
@@ -228,6 +237,7 @@
 			mainGroup = B8396462274AF9D600B56431;
 			packageReferences = (
 				B83964A4274B3D5B00B56431 /* XCRemoteSwiftPackageReference "SDWebImage" */,
+				B83964AE274FEEFB00B56431 /* XCRemoteSwiftPackageReference "HTMLKit" */,
 			);
 			productRefGroup = B839646C274AF9D600B56431 /* Products */;
 			projectDirPath = "";
@@ -276,7 +286,9 @@
 				B8396473274AF9D600B56431 /* ViewController.swift in Sources */,
 				B839646F274AF9D600B56431 /* AppDelegate.swift in Sources */,
 				B8396471274AF9D600B56431 /* SceneDelegate.swift in Sources */,
+				B83964A8274FE11300B56431 /* PictureDetailViewController.swift in Sources */,
 				B83964A3274B38B000B56431 /* FlickrCell.swift in Sources */,
+				B83964AA274FE6AF00B56431 /* Parser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -650,6 +662,14 @@
 				kind = branch;
 			};
 		};
+		B83964AE274FEEFB00B56431 /* XCRemoteSwiftPackageReference "HTMLKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/iabudiab/HTMLKit";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -657,6 +677,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B83964A4274B3D5B00B56431 /* XCRemoteSwiftPackageReference "SDWebImage" */;
 			productName = SDWebImage;
+		};
+		B83964AF274FEEFB00B56431 /* HTMLKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B83964AE274FEEFB00B56431 /* XCRemoteSwiftPackageReference "HTMLKit" */;
+			productName = HTMLKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

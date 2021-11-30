@@ -2,6 +2,15 @@
   "object": {
     "pins": [
       {
+        "package": "HTMLKit",
+        "repositoryURL": "https://github.com/iabudiab/HTMLKit",
+        "state": {
+          "branch": "main",
+          "revision": "118cb4197164cc6987f41fae7e1eb21eb96b5f20",
+          "version": null
+        }
+      },
+      {
         "package": "SDWebImage",
         "repositoryURL": "https://github.com/SDWebImage/SDWebImage.git",
         "state": {

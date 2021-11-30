@@ -10,61 +10,92 @@ import SDWebImage
 
 class FlickrCell: UITableViewCell {
     
-    var title: UILabel
-    var tags: UILabel
-    var author: UILabel
+    let title: UILabel = {
+        let label = UILabel(frame: .zero)
+        label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.lineBreakMode = .byWordWrapping
+        return label
+    }()
+    let author: UILabel = {
+        let label = UILabel(frame: .zero)
+        label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     var pictureImageView: UIImageView
     var flikrData: FlickrPicData?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         
-        title = UILabel(frame: .zero)
-        title.numberOfLines = 0
-        title.translatesAutoresizingMaskIntoConstraints = false
-        
-        tags = UILabel(frame: .zero)
-        tags.numberOfLines = 0
-        tags.translatesAutoresizingMaskIntoConstraints = false
-        
-        author = UILabel(frame: .zero)
-        author.numberOfLines = 0
-        author.translatesAutoresizingMaskIntoConstraints = false
-        
         pictureImageView = UIImageView(image: UIImage(named: "background"))
+        pictureImageView.translatesAutoresizingMaskIntoConstraints = false
+        pictureImageView.contentMode = .scaleAspectFit
         
-        let textStack = UIStackView(arrangedSubviews: [title, author, tags])
-        textStack.translatesAutoresizingMaskIntoConstraints = false
-        textStack.axis = .vertical
-        textStack.distribution = .fill
+        let textViewHolder = UIView(frame: .zero)
+        textViewHolder.translatesAutoresizingMaskIntoConstraints = false
+        textViewHolder.clipsToBounds = true
         
-        let imageStack = UIStackView(arrangedSubviews: [pictureImageView])
-        imageStack.translatesAutoresizingMaskIntoConstraints = false
-        imageStack.axis = .vertical
-        imageStack.distribution = .fill
+        textViewHolder.addSubview(title)
+        textViewHolder.addSubview(author)
+        textViewHolder.addConstraints([
+            title.topAnchor.constraint(equalTo: textViewHolder.topAnchor, constant: 10.0),
+            title.leadingAnchor.constraint(equalTo: textViewHolder.leadingAnchor, constant: 10.0),
+            title.trailingAnchor.constraint(lessThanOrEqualTo: textViewHolder.trailingAnchor, constant: -10.0),
+            author.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 15.0),
+            author.leadingAnchor.constraint(equalTo: textViewHolder.leadingAnchor, constant: 10.0),
+            author.trailingAnchor.constraint(lessThanOrEqualTo: textViewHolder.trailingAnchor, constant: -10.0),
+            author.bottomAnchor.constraint(lessThanOrEqualTo: textViewHolder.bottomAnchor, constant: -10),
+        ])
         
-        let fullStackView = UIStackView(arrangedSubviews: [textStack, imageStack])
-        fullStackView.translatesAutoresizingMaskIntoConstraints = false
-        fullStackView.axis = .horizontal
-        fullStackView.distribution = .fillProportionally
+        let imageViewHolder = UIView(frame: .zero)
+        imageViewHolder.translatesAutoresizingMaskIntoConstraints = false
+        imageViewHolder.addSubview(pictureImageView)
+        imageViewHolder.addConstraints([
+            pictureImageView.centerYAnchor.constraint(equalTo: imageViewHolder.centerYAnchor),
+            pictureImageView.centerXAnchor.constraint(equalTo: imageViewHolder.centerXAnchor),
+            imageViewHolder.heightAnchor.constraint(greaterThanOrEqualToConstant: 90.0),
+            imageViewHolder.widthAnchor.constraint(equalToConstant: 90.0)
+        ])
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        self.addSubview(fullStackView)
+        self.contentView.addSubview(textViewHolder)
+        self.contentView.addSubview(imageViewHolder)
 
-        self.addConstraints([
-            fullStackView.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
-            fullStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
-            fullStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
-            fullStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -5)
+        self.contentView.addConstraints([
+            textViewHolder.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
+            textViewHolder.topAnchor.constraint(equalTo: self.contentView.topAnchor),
+            textViewHolder.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
+            textViewHolder.trailingAnchor.constraint(equalTo: imageViewHolder.leadingAnchor),
+            imageViewHolder.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
+            imageViewHolder.topAnchor.constraint(equalTo: self.contentView.topAnchor),
+            imageViewHolder.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor)
         ])
     }
     
-    func setImage(url: String) {
-        self.pictureImageView.sd_setImage(with: URL(string: url), placeholderImage: UIImage(named: "background"))
+    func configure(flickrPicData: FlickrPicData) -> FlickrCell {
+        
+        self.author.text = flickrPicData.author
+        self.title.text = flickrPicData.title
+        
+        self.pictureImageView.sd_imageTransition = .fade
+        self.pictureImageView.sd_setImage(with: URL(string: flickrPicData.media.source),
+                                          placeholderImage: UIImage(named: "background")) { image, error, cacheType, url in
+
+            if let image = image {
+                image.prepareThumbnail(of: CGSize(width: 90, height: 90)) { thumbnail in
+                    DispatchQueue.main.async {
+                        self.pictureImageView.image = thumbnail
+                    }
+                }
+            }
+        }
+        
+        return self
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 }

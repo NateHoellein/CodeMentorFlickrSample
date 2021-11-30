@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import HTMLKit
 
 class ViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource {
 
@@ -13,7 +14,7 @@ class ViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate
     var tableView: UITableView
     
     required init?(coder: NSCoder) {
-        tableView = UITableView(frame: .zero)
+        tableView = UITableView(frame: .zero, style: .plain)
         super.init(coder: coder)
     }
     
@@ -39,10 +40,13 @@ class ViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate
         searchStackView.distribution = .fill
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 90
+        
         tableView.register(FlickrCell.self, forCellReuseIdentifier: "FlickrCell")
         tableView.delegate = self
         tableView.dataSource = self
-        
         
         self.view.addSubview(searchStackView)
         self.view.addSubview(tableView)
@@ -89,6 +93,10 @@ extension ViewController {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Handle row tap here to launch a new ViewController to show more about the image
     }
+
+    public func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataSource?.items.count ?? 0
@@ -101,13 +109,10 @@ extension ViewController {
         
         let data = dataSource?.items[indexPath.row]
         
-        cell.author.text = data?.author
-        cell.tags.text = data?.tags
-        cell.title.text = data?.title
-        cell.setImage(url: (data?.media.source)!)
-        cell.flikrData = data
-        
-        return cell
+        guard let data = data else {
+            return UITableViewCell()
+        }
+        return cell.configure(flickrPicData: data)
     }
 }
 
